@@ -1,13 +1,20 @@
+import { Route, Routes } from "react-router";
+import AppLayout from "./layouts/AppLayout";
+import DashboardPage from "./pages/DashboardPage";
+import MapPage from "./pages/MapPage";
+import IncidentsPage from "./pages/IncidentsPage";
+import IncidentDetailPage from "./pages/IncidentDetailPage";
+
 function App() {
   return (
-    <>
-      <div className="flex min-h-svh flex-col items-center justify-center gap-4">
-        <h1 className="text-3xl font-bold">Urbetrack</h1>
-        <p className="text-muted-foreground">
-          Torre de control operativa de higiene urbana
-        </p>
-      </div>
-    </>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="mapa" element={<MapPage />} />
+        <Route path="incidentes" element={<IncidentsPage />} />
+        <Route path="incidentes/:id" element={<IncidentDetailPage />} />
+      </Route>
+    </Routes>
   );
 }
 
