@@ -5,6 +5,7 @@ import { useAssets } from "@/hooks/useAssets";
 import { Spinner } from "@/components/spinner/Spinner";
 import { TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { IncidentsLayer } from "@/components/map/IncidentsLayer";
 
 const CABA_CENTER: [number, number] = [-34.6037, -58.3816];
 
@@ -57,6 +58,7 @@ export default function MapPage() {
             </Marker>
           ))}
         </MarkerClusterGroup>
+        <IncidentsLayer />
       </MapContainer>
     </div>
   );
