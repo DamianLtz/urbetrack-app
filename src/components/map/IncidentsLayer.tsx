@@ -1,6 +1,7 @@
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useIncidents } from "@/hooks/useIncidents";
+import { useFilterStore } from "@/stores/filterStore";
 
 const incidentIcon = L.divIcon({
   className: "",
@@ -10,11 +11,16 @@ const incidentIcon = L.divIcon({
 });
 
 export function IncidentsLayer() {
-  const { data: incidents } = useIncidents({});
+  const zoneId = useFilterStore((s) => s.zoneId);
+  const status = useFilterStore((s) => s.status);
+  const type = useFilterStore((s) => s.type);
+  const { data: incidents } = useIncidents({ zoneId, status, type });
+
+  if (!incidents) return null;
 
   return (
     <>
-      {incidents?.map((incident) => (
+      {incidents.map((incident) => (
         <Marker
           key={incident.id}
           position={[incident.lat, incident.lng]}
