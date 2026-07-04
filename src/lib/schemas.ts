@@ -24,6 +24,9 @@ export const incidentSchema = z.object({
   zoneId: z.string(),
   createdAt: z.string(),
 });
+
+export type IncidentStatus = z.infer<typeof incidentStatusSchema>;
+export type IncidentType = z.infer<typeof incidentTypeSchema>;
 export type Incident = z.infer<typeof incidentSchema>;
 
 export const incidentInputSchema = z.object({
@@ -55,6 +58,8 @@ export const assetSchema = z.object({
   zoneId: z.string(),
 });
 
+export type AssetStatus = z.infer<typeof assetStatusSchema>;
+export type AssetType = z.infer<typeof assetTypeSchema>;
 export type Asset = z.infer<typeof assetSchema>;
 
 // VEHICLE:
