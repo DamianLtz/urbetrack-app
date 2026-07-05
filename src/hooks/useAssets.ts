@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
-import { assetSchema, type AssetStatus, type AssetType } from "@/lib/schemas";
+import { assetSchema } from "@/lib/schemas";
 import { z } from "zod";
+import { assetKeys, type AssetFilters } from "@/lib/queryKeys";
 
-export function useAssets(filters: { status?: AssetStatus; type?: AssetType }) {
+export function useAssets(filters: AssetFilters) {
   return useQuery({
-    queryKey: ["assets", filters],
+    queryKey: assetKeys.list(filters),
     queryFn: async () => {
       const params = new URLSearchParams();
       if (filters.status) params.set("status", filters.status);

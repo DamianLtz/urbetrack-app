@@ -1,19 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
-import {
-  incidentSchema,
-  type IncidentStatus,
-  type IncidentType,
-} from "@/lib/schemas";
+import { incidentSchema } from "@/lib/schemas";
 import { z } from "zod";
+import { incidentKeys, type IncidentFilters } from "@/lib/queryKeys";
 
-export function useIncidents(filters: {
-  status?: IncidentStatus;
-  type?: IncidentType;
-  zoneId?: string;
-}) {
+export function useIncidents(filters: IncidentFilters) {
   return useQuery({
-    queryKey: ["incidents", filters],
+    queryKey: incidentKeys.list(filters),
     queryFn: async () => {
       const params = new URLSearchParams();
       if (filters.status) params.set("status", filters.status);
@@ -30,7 +23,7 @@ export function useIncidents(filters: {
 
 export function useIncidentById(id: string) {
   return useQuery({
-    queryKey: ["incident", id],
+    queryKey: incidentKeys.detail(id),
     enabled: !!id,
     queryFn: async () => {
       const data = await apiFetch<unknown>(`/incidents/${id}`);

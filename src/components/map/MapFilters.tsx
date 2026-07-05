@@ -9,19 +9,7 @@ import {
 import type { IncidentStatus, IncidentType } from "@/lib/schemas";
 import { Label } from "@/components/ui/label";
 import { useZones } from "@/hooks/useZones";
-
-const STATUS_OPTIONS: IncidentStatus[] = [
-  "REPORTED",
-  "IN_PROGRESS",
-  "RESOLVED",
-];
-
-const TYPE_OPTIONS: IncidentType[] = [
-  "DAMAGE",
-  "LITTERING",
-  "OVERFLOW",
-  "OTHER",
-];
+import { STATUS_OPTIONS, TYPE_OPTIONS } from "@/lib/incidentOptions";
 
 export function MapFilters() {
   const status = useFilterStore((s) => s.status);
@@ -54,8 +42,8 @@ export function MapFilters() {
           <SelectContent>
             <SelectItem value="ALL">Todos los estados</SelectItem>
             {STATUS_OPTIONS.map((s) => (
-              <SelectItem key={s} value={s}>
-                {s}
+              <SelectItem key={s.value} value={s.value}>
+                {s.label}
               </SelectItem>
             ))}
           </SelectContent>
@@ -75,8 +63,8 @@ export function MapFilters() {
           <SelectContent>
             <SelectItem value="ALL">Todos los tipos</SelectItem>
             {TYPE_OPTIONS.map((t) => (
-              <SelectItem key={t} value={t}>
-                {t}
+              <SelectItem key={t.value} value={t.value}>
+                {t.label}
               </SelectItem>
             ))}
           </SelectContent>
