@@ -1,6 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Link } from "react-router";
 import type { Incident } from "@/lib/schemas";
+import { ArrowRight } from "lucide-react";
 import {
   STATUS_LABELS,
   TYPE_LABELS,
@@ -52,13 +53,15 @@ export function getIncidentsColumns(
     },
     {
       id: "actions",
-      header: "Acciones",
+      header: "",
       cell: ({ row }) => (
         <Link
           to={`/incidentes/${row.original.id}`}
-          className="text-primary hover:underline"
+          aria-label="Ver detalle del incidente"
+          onClick={(e) => e.stopPropagation()}
+          className="inline-flex size-11 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
         >
-          Ver
+          <ArrowRight className="size-5" />
         </Link>
       ),
     },

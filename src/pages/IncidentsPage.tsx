@@ -10,9 +10,11 @@ import { TriangleAlert } from "lucide-react";
 import { Marker, MarkerContent } from "@/components/ui/marker";
 import { IncidentsFilterDialog } from "@/components/dialogs/IncidentsFilterDialog";
 import { IncidentsFilterChips } from "@/components/chips/IncidentsFilterChips";
+import { useNavigate } from "react-router";
 
 export default function IncidentsPage() {
   const [filters, setFilters] = useState<IncidentFilters>({});
+  const navigate = useNavigate();
 
   const {
     data: incidents,
@@ -78,7 +80,11 @@ export default function IncidentsPage() {
           </div>
         )}
         {!isPending && !isError && (
-          <DataTable columns={columns} data={incidents ?? []} />
+          <DataTable
+            columns={columns}
+            data={incidents ?? []}
+            onRowClick={(incident) => navigate(`/incidentes/${incident.id}`)}
+          />
         )}
       </div>
     </div>
