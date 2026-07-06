@@ -1,16 +1,26 @@
-import { NavLink, Outlet } from "react-router";
+import { Outlet } from "react-router";
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import Header from "@/components/header/Header";
 
 export default function AppLayout() {
   return (
-    <div className="flex min-h-svh">
-      <nav className="w-56 border-r p-4 flex flex-col gap-2">
-        <NavLink to="/">Dashboard</NavLink>
-        <NavLink to="/mapa">Mapa</NavLink>
-        <NavLink to="/incidentes">Incidentes</NavLink>
-      </nav>
-      <main className="flex-1 p-6">
-        <Outlet />
-      </main>
-    </div>
+    <SidebarProvider defaultOpen={false}>
+      <AppSidebar />
+      <SidebarInset className="bg-slate-50">
+        <Header>
+          <SidebarTrigger />
+        </Header>
+        <main className="container mx-auto px-6 py-10">
+          <div className="flex-1">
+            <Outlet />
+          </div>
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

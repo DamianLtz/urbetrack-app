@@ -31,7 +31,7 @@ export default function IncidentsPage() {
   const columns = useMemo(() => getIncidentsColumns(zonesById), [zonesById]);
 
   return (
-    <div className="flex flex-col gap-6 p-6 h-full">
+    <div className="flex flex-col gap-6 h-full">
       <h1 className="text-2xl font-bold">Incidentes</h1>
 
       {/* toolbar + chips: chrome persistente, siempre visible */}

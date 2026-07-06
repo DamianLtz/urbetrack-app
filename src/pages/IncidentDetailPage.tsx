@@ -43,7 +43,7 @@ export default function IncidentDetailPage() {
   );
 
   return (
-    <div className="flex flex-col gap-6 p-6 h-full">
+    <div className="flex flex-col gap-6 h-full">
       <button
         onClick={() => navigate(-1)}
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"

@@ -50,7 +50,7 @@ export function IncidentsFilterDialog({ applied, onApply }: Props) {
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="default">Filtrar</Button>
+        <Button variant="primary">Filtrar</Button>
       </DialogTrigger>
       <DialogContent sizeDialog="max-w-xl">
         <DialogHeader>
@@ -158,6 +158,7 @@ export function IncidentsFilterDialog({ applied, onApply }: Props) {
           </DialogClose>
           <Button
             type="button"
+            variant="primary"
             onClick={() => {
               onApply(draft);
               setOpen(false);
