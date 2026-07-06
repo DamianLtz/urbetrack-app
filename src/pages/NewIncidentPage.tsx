@@ -26,6 +26,9 @@ import { TYPE_OPTIONS } from "@/lib/incidentOptions";
 import { useZones } from "@/hooks/useZones";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useCreateIncident } from "@/hooks/useIncidents";
+import { Toast } from "@/components/toast/Toast";
+import { toast } from "sonner";
 
 function LocationPicker({
   onPick,
@@ -43,6 +46,8 @@ function LocationPicker({
 const CABA_CENTER: [number, number] = [-34.6037, -58.3816];
 
 export default function NewIncidentPage() {
+  const navigate = useNavigate();
+  const { mutate, isPending } = useCreateIncident();
   const {
     control,
     handleSubmit,
@@ -61,12 +66,27 @@ export default function NewIncidentPage() {
   });
 
   const onSubmit = (data: IncidentInput) => {
-    console.log("válido:", data);
+    mutate(data, {
+      onSuccess: () => {
+        toast.custom((id) => (
+          <Toast id={id} variant="success">
+            El incidente ha sido cargado con éxito.
+          </Toast>
+        ));
+        navigate("/incidentes");
+      },
+      onError: () => {
+        toast.custom((id) => (
+          <Toast id={id} variant="error">
+            Ocurrió un error cargando el incidente.
+          </Toast>
+        ));
+      },
+    });
   };
 
   const lat = watch("lat");
   const lng = watch("lng");
-  const navigate = useNavigate();
   const {
     data: zones,
     isLoading: zonesLoading,
@@ -244,11 +264,12 @@ export default function NewIncidentPage() {
                     Cancelar
                   </Button>
                   <Button
+                    disabled={isPending}
                     variant="primary"
                     className="flex-1 sm:flex-none"
                     type="submit"
                   >
-                    Cargar
+                    {isPending ? "Cargando..." : "Cargar"}
                   </Button>
                 </div>
               </FieldSet>

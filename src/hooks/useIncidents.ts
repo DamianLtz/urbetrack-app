@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/api";
-import { incidentSchema } from "@/lib/schemas";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiFetch, apiPost } from "@/lib/api";
+import { incidentSchema, type IncidentInput } from "@/lib/schemas";
 import { z } from "zod";
 import { incidentKeys, type IncidentFilters } from "@/lib/queryKeys";
 
@@ -28,6 +28,21 @@ export function useIncidentById(id: string) {
     queryFn: async () => {
       const data = await apiFetch<unknown>(`/incidents/${id}`);
       return incidentSchema.parse(data);
+    },
+  });
+}
+
+// Mutaciones:
+
+export function useCreateIncident() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: IncidentInput) => {
+      const data = await apiPost<unknown>("/incidents", input);
+      return incidentSchema.parse(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: incidentKeys.lists() });
     },
   });
 }
