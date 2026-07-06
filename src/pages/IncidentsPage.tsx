@@ -10,7 +10,7 @@ import { TriangleAlert } from "lucide-react";
 import { Marker, MarkerContent } from "@/components/ui/marker";
 import { IncidentsFilterDialog } from "@/components/dialogs/IncidentsFilterDialog";
 import { IncidentsFilterChips } from "@/components/chips/IncidentsFilterChips";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function IncidentsPage() {
   const [filters, setFilters] = useState<IncidentFilters>({});
@@ -44,6 +44,9 @@ export default function IncidentsPage() {
           Limpiar filtros
         </Button>
         <IncidentsFilterDialog applied={filters} onApply={setFilters} />
+        <Button asChild variant="secondary">
+          <Link to="/incidentes/nuevo">Reportar incidente</Link>
+        </Button>
       </div>
       <div className="flex items-center justify-end">
         <IncidentsFilterChips

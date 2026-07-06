@@ -13,6 +13,9 @@ dist-ssr
 *.local
 .env
 CLAUDE.md
+.backend/
+.backend
+backend/
 .agents/
 skills-lock.json
 
