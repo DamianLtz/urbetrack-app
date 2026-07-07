@@ -2,6 +2,7 @@ import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useIncidents } from "@/hooks/useIncidents";
 import { useFilterStore } from "@/stores/filterStore";
+import { TYPE_LABELS, STATUS_LABELS } from "@/lib/incidentOptions";
 
 const incidentIcon = L.divIcon({
   className: "",
@@ -29,10 +30,16 @@ export function IncidentsLayer() {
           <Popup>
             <div className="flex flex-col gap-1">
               <p className="text-xs font-semibold m-0!">
-                Tipo: <span className="font-normal">{incident.type}</span>
+                Tipo:{" "}
+                <span className="font-normal">
+                  {TYPE_LABELS[incident.type]}
+                </span>
               </p>
               <p className="text-xs font-semibold m-0!">
-                Estado: <span className="font-normal">{incident.status}</span>
+                Estado:{" "}
+                <span className="font-normal">
+                  {STATUS_LABELS[incident.status]}
+                </span>
               </p>
               <p className="text-xs font-semibold m-0!">
                 Descripción:{" "}

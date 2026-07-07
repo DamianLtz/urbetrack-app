@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { IncidentsLayer } from "@/components/map/IncidentsLayer";
 import { MapFilters } from "@/components/map/MapFilters";
 import { PageHeader } from "@/components/pageHeader/PageHeader";
+import { ASSET_TYPE_LABELS, ASSET_STATUS_LABELS } from "@/lib/assetOptions";
 
 const CABA_CENTER: [number, number] = [-34.6037, -58.3816];
 
@@ -52,11 +53,16 @@ export default function MapPage() {
                 <Popup>
                   <div className="flex flex-col gap-1">
                     <p className="text-xs font-semibold m-0!">
-                      Tipo: <span className="font-normal">{asset.type}</span>
+                      Tipo:{" "}
+                      <span className="font-normal">
+                        {ASSET_TYPE_LABELS[asset.type]}
+                      </span>
                     </p>
                     <p className="text-xs font-semibold m-0!">
                       Estado:{" "}
-                      <span className="font-normal">{asset.status}</span>
+                      <span className="font-normal">
+                        {ASSET_STATUS_LABELS[asset.status]}
+                      </span>
                     </p>
                     <p className="text-xs font-semibold m-0!">
                       Dirección:{" "}
