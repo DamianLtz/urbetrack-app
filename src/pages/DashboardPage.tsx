@@ -119,7 +119,7 @@ export default function DashboardPage() {
         title="Dashboard"
         subtitle="Resumen operativo de incidentes"
       />
-      {renderContent()}
+      <div className="grid grid-cols-1 gap-6">{renderContent()}</div>
     </div>
   );
 }

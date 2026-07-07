@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { NavLink } from "react-router";
+import Logo from "@/assets/img/header/urbetrack-logo.webp";
 
 export default function Header({ children }: { children?: ReactNode }) {
   return (
@@ -10,7 +11,7 @@ export default function Header({ children }: { children?: ReactNode }) {
             to="/"
             className="font-semibold text-xl text-shadow-slate-900"
           >
-            Urbetrack
+            <img src={Logo} alt="Urbetrack" className="invert h-10" />
           </NavLink>
           <span className="lg:hidden">{children}</span>
         </div>

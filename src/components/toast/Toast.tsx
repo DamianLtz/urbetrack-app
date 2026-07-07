@@ -2,7 +2,7 @@ import React from "react";
 import { toast } from "sonner";
 
 import { CheckCircle, XCircle, Info, AlertTriangle, XIcon } from "lucide-react";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export type ToastVariant = "success" | "error" | "info" | "warning";
 

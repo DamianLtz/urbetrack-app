@@ -17,11 +17,13 @@ export default function MapPage() {
 
   return (
     <div className="flex flex-col gap-4 h-[calc(100vh-4rem)]">
-      <PageHeader
-        title="Mapa operativo"
-        subtitle="Mobiliario urbano e incidentes en CABA"
-      />
-      <MapFilters />
+      <div className="flex flex-col lg:flex-row lg:justify-between gap-4 mb-4">
+        <PageHeader
+          title="Mapa operativo"
+          subtitle="Mobiliario urbano e incidentes en CABA"
+        />
+        <MapFilters />
+      </div>
       <div className="relative flex-1">
         {isFetching && (
           <div className="absolute inset-0 z-1000 grid place-items-center bg-background/50">

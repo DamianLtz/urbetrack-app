@@ -50,7 +50,9 @@ export function IncidentsFilterDialog({ applied, onApply }: Props) {
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="primary">Filtrar</Button>
+        <Button variant="primary" className="sm:flex-1 lg:flex-none">
+          Filtrar
+        </Button>
       </DialogTrigger>
       <DialogContent sizeDialog="max-w-xl">
         <DialogHeader>

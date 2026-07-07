@@ -31,32 +31,51 @@ export default function IncidentsPage() {
   );
   const columns = useMemo(() => getIncidentsColumns(zonesById), [zonesById]);
 
+  // Más reciente primero: es lo esperable en una tabla operativa y de paso el
+  // incidente recién creado cae en la página 1. Copia para no mutar la cache.
+  const rows = useMemo(
+    () =>
+      [...(incidents ?? [])].sort((a, b) =>
+        b.createdAt.localeCompare(a.createdAt),
+      ),
+    [incidents],
+  );
+
   return (
     <div className="flex flex-col gap-6 h-full">
-      <PageHeader
-        title="Incidentes"
-        subtitle="Listado de incidentes reportados y su estado"
-      />
-
-      {/* toolbar + chips: chrome persistente, siempre visible */}
-      <div className="flex items-center justify-end gap-2">
-        <Button
-          disabled={!Object.values(filters).some(Boolean)}
-          variant="ghost"
-          onClick={() => setFilters({})}
-        >
-          Limpiar filtros
-        </Button>
-        <IncidentsFilterDialog applied={filters} onApply={setFilters} />
-        <Button asChild variant="secondary">
-          <Link to="/incidentes/nuevo">Reportar incidente</Link>
-        </Button>
-      </div>
-      <div className="flex items-center justify-end">
-        <IncidentsFilterChips
-          applied={filters}
-          onRemove={(key) => setFilters((f) => ({ ...f, [key]: undefined }))}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <PageHeader
+          title="Incidentes"
+          subtitle="Listado de incidentes reportados y su estado"
         />
+        <div>
+          <div className="flex flex-col sm:flex-row sm:items-center lg:justify-end gap-2">
+            <Button
+              disabled={!Object.values(filters).some(Boolean)}
+              variant="ghost"
+              onClick={() => setFilters({})}
+              className="sm:flex-1 lg:flex-none"
+            >
+              Limpiar filtros
+            </Button>
+            <IncidentsFilterDialog applied={filters} onApply={setFilters} />
+            <Button
+              asChild
+              variant="secondary"
+              className="sm:flex-1 lg:flex-none"
+            >
+              <Link to="/incidentes/nuevo">Reportar incidente</Link>
+            </Button>
+          </div>
+          <div className="flex items-center justify-end">
+            <IncidentsFilterChips
+              applied={filters}
+              onRemove={(key) =>
+                setFilters((f) => ({ ...f, [key]: undefined }))
+              }
+            />
+          </div>
+        </div>
       </div>
 
       {/* región de contenido: swap loading / error / tabla */}
@@ -87,11 +106,14 @@ export default function IncidentsPage() {
           </div>
         )}
         {!isPending && !isError && (
-          <DataTable
-            columns={columns}
-            data={incidents ?? []}
-            onRowClick={(incident) => navigate(`/incidentes/${incident.id}`)}
-          />
+          <div className="grid grid-cols-1">
+            <DataTable
+              columns={columns}
+              data={rows}
+              getRowId={(incident) => incident.id}
+              onRowClick={(incident) => navigate(`/incidentes/${incident.id}`)}
+            />
+          </div>
         )}
       </div>
     </div>

@@ -1,0 +1,5 @@
+# Forzamos una sola versión de zod: shadcn (CLI) arrastra zod 3, pero la app
+# usa zod 4 y @hookform/resolvers resuelve su import `zod/v4/core` contra la
+# copia que encuentre. Sin esto conviven zod 3 y 4 y el zodResolver rompe tipos.
+overrides:
+  zod: 4.4.3

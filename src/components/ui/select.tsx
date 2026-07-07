@@ -32,7 +32,7 @@ function SelectValue({
 function SelectTrigger({
   className,
   size = "default",
-  sizeClassName = "w-52",
+  sizeClassName = "w-full lg:w-52",
   children,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {

@@ -107,111 +107,116 @@ export default function NewIncidentPage() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               <FieldSet>
-                <FieldLegend>
+                <FieldLegend className="mb-4">
                   Completá el formulario para cargar la incidencia
                 </FieldLegend>
-                <FieldGroup className="grid grid-cols-12 gap-6">
-                  <Field
-                    className="col-span-12 md:col-span-6 lg:col-span-4"
-                    data-invalid={!!errors.type}
-                  >
-                    <FieldLabel>Tipo</FieldLabel>
-                    <Controller
-                      name="type"
-                      control={control}
-                      render={({ field }) => (
-                        <Select
-                          value={field.value ?? ""}
-                          onValueChange={field.onChange}
-                        >
-                          <SelectTrigger
-                            sizeClassName="w-full"
-                            aria-invalid={!!errors.type}
+                <FieldGroup className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                  <div className="grid grid-cols-12 gap-6">
+                    <Field
+                      className="col-span-12 md:col-span-6 lg:col-span-6"
+                      data-invalid={!!errors.type}
+                    >
+                      <FieldLabel>Tipo</FieldLabel>
+                      <Controller
+                        name="type"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            value={field.value ?? ""}
+                            onValueChange={field.onChange}
                           >
-                            <SelectValue placeholder="Seleccioná el tipo" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              {TYPE_OPTIONS.map((type) => (
-                                <SelectItem key={type.value} value={type.value}>
-                                  {type.label}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
+                            <SelectTrigger
+                              sizeClassName="w-full"
+                              aria-invalid={!!errors.type}
+                            >
+                              <SelectValue placeholder="Seleccioná el tipo" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                {TYPE_OPTIONS.map((type) => (
+                                  <SelectItem
+                                    key={type.value}
+                                    value={type.value}
+                                  >
+                                    {type.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                      {errors.type?.message && (
+                        <FieldError>Seleccioná el tipo de incidente</FieldError>
                       )}
-                    />
-                    {errors.type?.message && (
-                      <FieldError>Seleccioná el tipo de incidente</FieldError>
-                    )}
-                  </Field>
-                  <Field
-                    className="col-span-12 md:col-span-6 lg:col-span-4"
-                    data-invalid={!!errors.zoneId}
-                  >
-                    <FieldLabel>Zona</FieldLabel>
-                    <Controller
-                      name="zoneId"
-                      control={control}
-                      render={({ field }) => (
-                        <Select
-                          disabled={zonesDisabled}
-                          value={field.value ?? ""}
-                          onValueChange={field.onChange}
-                        >
-                          <SelectTrigger
-                            sizeClassName="w-full"
+                    </Field>
+                    <Field
+                      className="col-span-12 md:col-span-6 lg:col-span-6"
+                      data-invalid={!!errors.zoneId}
+                    >
+                      <FieldLabel>Zona</FieldLabel>
+                      <Controller
+                        name="zoneId"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
                             disabled={zonesDisabled}
-                            aria-invalid={!!errors.zoneId}
+                            value={field.value ?? ""}
+                            onValueChange={field.onChange}
                           >
-                            <SelectValue
-                              placeholder={
-                                zonesLoading
-                                  ? "Cargando zonas..."
-                                  : "Seleccioná la zona"
-                              }
-                            />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              {zones?.map((zone) => (
-                                <SelectItem key={zone.id} value={zone.id}>
-                                  {zone.name}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
+                            <SelectTrigger
+                              sizeClassName="w-full"
+                              disabled={zonesDisabled}
+                              aria-invalid={!!errors.zoneId}
+                            >
+                              <SelectValue
+                                placeholder={
+                                  zonesLoading
+                                    ? "Cargando zonas..."
+                                    : "Seleccioná la zona"
+                                }
+                              />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                {zones?.map((zone) => (
+                                  <SelectItem key={zone.id} value={zone.id}>
+                                    {zone.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                      {errors.zoneId?.message && (
+                        <FieldError>Seleccioná la zona</FieldError>
                       )}
-                    />
-                    {errors.zoneId?.message && (
-                      <FieldError>Seleccioná la zona</FieldError>
-                    )}
-                  </Field>
-                  <Field
-                    className="col-span-12 md:col-span-6 lg:col-span-8"
-                    data-invalid={!!errors.description}
-                  >
-                    <FieldLabel>Descripción</FieldLabel>
-                    <Controller
-                      name="description"
-                      control={control}
-                      render={({ field }) => (
-                        <Textarea
-                          aria-invalid={!!errors.description}
-                          className="min-h-24"
-                          value={field.value ?? ""}
-                          onChange={field.onChange}
-                        />
+                    </Field>
+                    <Field
+                      className="col-span-12"
+                      data-invalid={!!errors.description}
+                    >
+                      <FieldLabel>Descripción</FieldLabel>
+                      <Controller
+                        name="description"
+                        control={control}
+                        render={({ field }) => (
+                          <Textarea
+                            aria-invalid={!!errors.description}
+                            className="min-h-24"
+                            value={field.value ?? ""}
+                            onChange={field.onChange}
+                          />
+                        )}
+                      />
+                      {errors.description?.message && (
+                        <FieldError>La descripción es obligatoria</FieldError>
                       )}
-                    />
-                    {errors.description?.message && (
-                      <FieldError>La descripción es obligatoria</FieldError>
-                    )}
-                  </Field>
+                    </Field>
+                  </div>
 
-                  <Field className="col-span-12">
+                  <Field>
                     <FieldLabel>Ubicación</FieldLabel>
                     <FieldDescription>
                       Seleccioná en el mapa la ubicación del incidente.
@@ -259,7 +264,7 @@ export default function NewIncidentPage() {
                   <Button
                     type="button"
                     variant="ghost"
-                    className="flex-1 sm:flex-none"
+                    className="w-full sm:w-auto"
                     onClick={() => navigate("/incidentes")}
                   >
                     Cancelar
@@ -267,7 +272,7 @@ export default function NewIncidentPage() {
                   <Button
                     disabled={isPending}
                     variant="primary"
-                    className="flex-1 sm:flex-none"
+                    className="w-full sm:w-auto"
                     type="submit"
                   >
                     {isPending ? "Cargando..." : "Cargar"}

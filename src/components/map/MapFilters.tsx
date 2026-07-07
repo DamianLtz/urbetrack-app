@@ -27,8 +27,8 @@ export function MapFilters() {
   } = useZones();
 
   return (
-    <div className="flex items-center justify-end mb-6 gap-2">
-      <div className="space-y-1">
+    <div className="flex flex-col sm:flex-row md:items-center lg:justify-end gap-2 lg:self-end">
+      <div className="space-y-1 flex-1 lg:flex-none">
         <Label>Estado</Label>
         <Select
           value={status ?? "ALL"}
@@ -49,7 +49,7 @@ export function MapFilters() {
           </SelectContent>
         </Select>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1 flex-1 lg:flex-none">
         <Label>Tipo</Label>
         <Select
           value={type ?? "ALL"}
@@ -70,7 +70,7 @@ export function MapFilters() {
           </SelectContent>
         </Select>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1 flex-1 lg:flex-none">
         <Label>Zona</Label>
         <Select
           disabled={zonesLoading || zonesError}

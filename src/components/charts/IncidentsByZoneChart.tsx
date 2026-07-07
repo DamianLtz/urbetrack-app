@@ -19,7 +19,7 @@ type Props = { data: { zoneName: string; count: number }[] };
 const chartConfig = {
   count: {
     label: "Incidentes",
-    color: "var(--color-twilight-indigo-500)",
+    color: "var(--color-primary-ut)",
   },
 } satisfies ChartConfig;
 
