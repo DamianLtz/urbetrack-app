@@ -14,6 +14,7 @@ import { useZones } from "@/hooks/useZones";
 import type { IncidentStatus } from "@/lib/schemas";
 import { IncidentsByZoneChart } from "@/components/charts/IncidentsByZoneChart";
 import { PageHeader } from "@/components/pageHeader/PageHeader";
+import { Link } from "react-router";
 
 const KPI_GRID = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4";
 
@@ -83,26 +84,30 @@ export default function DashboardPage() {
     return (
       <>
         <section className={KPI_GRID}>
-          <Card>
-            <CardHeader>
-              <CardTitle>Total de incidentes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-bold">{stats.total}</p>
-            </CardContent>
-          </Card>
+          <Link to="/incidentes">
+            <Card className="transition-colors outline hover:outline-2 outline-transparent hover:outline-secondary-ut">
+              <CardHeader>
+                <CardTitle>Total de incidentes</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-3xl font-bold">{stats.total}</p>
+              </CardContent>
+            </Card>
+          </Link>
 
           {/* status cards */}
           {(Object.entries(stats.byStatus) as [IncidentStatus, number][]).map(
             ([status, count]) => (
-              <Card key={status}>
-                <CardHeader>
-                  <CardTitle>{STATUS_LABELS[status]}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-3xl font-bold">{count}</p>
-                </CardContent>
-              </Card>
+              <Link to={`/incidentes?status=${status}`} key={status}>
+                <Card className="transition-colors outline hover:outline-2 outline-transparent hover:outline-secondary-ut">
+                  <CardHeader>
+                    <CardTitle>{STATUS_LABELS[status]}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-3xl font-bold">{count}</p>
+                  </CardContent>
+                </Card>
+              </Link>
             ),
           )}
         </section>

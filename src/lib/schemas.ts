@@ -29,6 +29,10 @@ export type IncidentStatus = z.infer<typeof incidentStatusSchema>;
 export type IncidentType = z.infer<typeof incidentTypeSchema>;
 export type Incident = z.infer<typeof incidentSchema>;
 
+export function isValidStatus(value: unknown): value is IncidentStatus {
+  return incidentStatusSchema.safeParse(value).success;
+}
+
 export const incidentInputSchema = z.object({
   type: incidentTypeSchema,
   description: z.string().min(1, "La descripción es obligatoria"),

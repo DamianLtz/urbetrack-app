@@ -10,11 +10,16 @@ import { TriangleAlert } from "lucide-react";
 import { Marker, MarkerContent } from "@/components/ui/marker";
 import { IncidentsFilterDialog } from "@/components/dialogs/IncidentsFilterDialog";
 import { IncidentsFilterChips } from "@/components/chips/IncidentsFilterChips";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { PageHeader } from "@/components/pageHeader/PageHeader";
+import { isValidStatus } from "@/lib/schemas";
 
 export default function IncidentsPage() {
-  const [filters, setFilters] = useState<IncidentFilters>({});
+  const [searchParams] = useSearchParams();
+  const [filters, setFilters] = useState<IncidentFilters>(() => {
+    const status = searchParams.get("status");
+    return isValidStatus(status) ? { status } : {};
+  });
   const navigate = useNavigate();
 
   const {
@@ -31,8 +36,6 @@ export default function IncidentsPage() {
   );
   const columns = useMemo(() => getIncidentsColumns(zonesById), [zonesById]);
 
-  // Más reciente primero: es lo esperable en una tabla operativa y de paso el
-  // incidente recién creado cae en la página 1. Copia para no mutar la cache.
   const rows = useMemo(
     () =>
       [...(incidents ?? [])].sort((a, b) =>
@@ -48,7 +51,7 @@ export default function IncidentsPage() {
           title="Incidentes"
           subtitle="Listado de incidentes reportados y su estado"
         />
-        <div>
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center lg:justify-end gap-2">
             <Button
               disabled={!Object.values(filters).some(Boolean)}
