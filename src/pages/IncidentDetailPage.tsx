@@ -24,6 +24,7 @@ import { formatDateTime } from "@/lib/formatDate";
 import { useZones } from "@/hooks/useZones";
 import { useMemo } from "react";
 import { Field, FieldTitle, FieldDescription } from "@/components/ui/field";
+import { PageHeader } from "@/components/pageHeader/PageHeader";
 
 export default function IncidentDetailPage() {
   const { id } = useParams();
@@ -51,6 +52,7 @@ export default function IncidentDetailPage() {
         <ArrowLeft className="size-5" />
         Volver a incidentes
       </button>
+      <PageHeader title="Detalle del incidente" />
       <div className="flex-1 min-h-0">
         {isPending && (
           <div className="grid place-items-center h-full">

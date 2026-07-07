@@ -7,6 +7,7 @@ import { TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IncidentsLayer } from "@/components/map/IncidentsLayer";
 import { MapFilters } from "@/components/map/MapFilters";
+import { PageHeader } from "@/components/pageHeader/PageHeader";
 
 const CABA_CENTER: [number, number] = [-34.6037, -58.3816];
 
@@ -14,7 +15,11 @@ export default function MapPage() {
   const { data: assets, isFetching, isError, refetch } = useAssets({});
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)]">
+    <div className="flex flex-col gap-4 h-[calc(100vh-4rem)]">
+      <PageHeader
+        title="Mapa operativo"
+        subtitle="Mobiliario urbano e incidentes en CABA"
+      />
       <MapFilters />
       <div className="relative flex-1">
         {isFetching && (

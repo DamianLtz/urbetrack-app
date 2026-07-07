@@ -11,6 +11,7 @@ import { Marker, MarkerContent } from "@/components/ui/marker";
 import { IncidentsFilterDialog } from "@/components/dialogs/IncidentsFilterDialog";
 import { IncidentsFilterChips } from "@/components/chips/IncidentsFilterChips";
 import { Link, useNavigate } from "react-router";
+import { PageHeader } from "@/components/pageHeader/PageHeader";
 
 export default function IncidentsPage() {
   const [filters, setFilters] = useState<IncidentFilters>({});
@@ -32,7 +33,10 @@ export default function IncidentsPage() {
 
   return (
     <div className="flex flex-col gap-6 h-full">
-      <h1 className="text-2xl font-bold">Incidentes</h1>
+      <PageHeader
+        title="Incidentes"
+        subtitle="Listado de incidentes reportados y su estado"
+      />
 
       {/* toolbar + chips: chrome persistente, siempre visible */}
       <div className="flex items-center justify-end gap-2">

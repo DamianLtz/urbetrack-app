@@ -106,7 +106,7 @@ export default function DashboardPage() {
             ),
           )}
         </section>
-        <section className="mt-6">
+        <section>
           <IncidentsByZoneChart data={stats.byZone} />
         </section>
       </>
@@ -114,12 +114,12 @@ export default function DashboardPage() {
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <PageHeader
         title="Dashboard"
         subtitle="Resumen operativo de incidentes"
       />
       {renderContent()}
-    </>
+    </div>
   );
 }

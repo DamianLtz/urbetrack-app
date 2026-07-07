@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import { useCreateIncident } from "@/hooks/useIncidents";
 import { Toast } from "@/components/toast/Toast";
 import { toast } from "sonner";
+import { PageHeader } from "@/components/pageHeader/PageHeader";
 
 function LocationPicker({
   onPick,
@@ -95,11 +96,11 @@ export default function NewIncidentPage() {
   const zonesDisabled = zonesLoading || zonesError;
 
   return (
-    <>
-      <h1 className="text-2xl font-semibold">Nuevo incidente</h1>
-      <p className="mb-6 text-muted-foreground">
-        Acá podrás cargar una nueva incidencia
-      </p>
+    <div className="flex flex-col gap-6">
+      <PageHeader
+        title="Reportar incidente"
+        subtitle="Completá los datos y marcá la ubicación en el mapa"
+      />
 
       <Card>
         <section className="px-6">
@@ -107,7 +108,7 @@ export default function NewIncidentPage() {
             <FieldGroup>
               <FieldSet>
                 <FieldLegend>
-                  Completa el formulario para cagar la incidencia
+                  Completá el formulario para cargar la incidencia
                 </FieldLegend>
                 <FieldGroup className="grid grid-cols-12 gap-6">
                   <Field
@@ -277,6 +278,6 @@ export default function NewIncidentPage() {
           </form>
         </section>
       </Card>
-    </>
+    </div>
   );
 }
