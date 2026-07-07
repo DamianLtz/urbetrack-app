@@ -27,14 +27,14 @@ const data = {
       isActive: true,
     },
     {
+      title: "Mapa",
+      url: "/mapa",
+      icon: <MapIcon />,
+    },
+    {
       title: "Incidentes",
       url: "/incidentes",
       icon: <BookAlert />,
-    },
-    {
-      title: "Mapas",
-      url: "/mapa",
-      icon: <MapIcon />,
     },
   ],
 };

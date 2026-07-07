@@ -10,7 +10,7 @@ function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route index element={<Navigate to="/mapa" replace />} />
+        <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="mapa" element={<MapPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="incidentes" element={<IncidentsPage />} />
