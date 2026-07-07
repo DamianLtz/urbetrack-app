@@ -26,6 +26,9 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
 
+  // Rol hardcodeado temporalmente:
+  const role = "Supervisor";
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -41,7 +44,7 @@ export function NavUser({
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate text-xs opacity-70">{role}</span>
               </div>
               <ChevronsUpDownIcon className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -61,6 +64,9 @@ export function NavUser({
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
                   <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate text-xs text-violet-500">
+                    {role}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
