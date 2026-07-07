@@ -13,6 +13,8 @@ import { TriangleAlert } from "lucide-react";
 import { useZones } from "@/hooks/useZones";
 import type { IncidentStatus } from "@/lib/schemas";
 
+const KPI_GRID = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4";
+
 export default function DashboardPage() {
   const { data: incidents, isPending, isError, refetch } = useIncidents({});
   const { data: zones } = useZones();
@@ -26,61 +28,65 @@ export default function DashboardPage() {
     };
   }, [incidents, zones]);
 
-  return (
-    <section>
-      {isPending ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <Card key={`card-KPI-${i}`}>
-              <CardHeader>
-                <CardTitle>
-                  <Skeleton className="h-6 w-3/4" />
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-9 w-12 rounded-md" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      ) : isError ? (
-        <div className="grid place-items-center bg-background/80 h-[calc(100dvh-148px)]">
-          <div className="flex flex-col items-center gap-3 text-center">
-            <TriangleAlert className="size-8 text-destructive" />
-            <p className="text-sm">
-              Hubo un problema al cargar las estadísticas. Reintentá
-            </p>
-            <Button variant="outline" size="sm" onClick={() => refetch()}>
-              Reintentar
-            </Button>
-          </div>
-        </div>
-      ) : stats ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card>
+  if (isPending) {
+    return (
+      <div className={KPI_GRID}>
+        {[1, 2, 3, 4].map((i) => (
+          <Card key={`card-KPI-${i}`}>
             <CardHeader>
-              <CardTitle>Total de incidentes</CardTitle>
+              <CardTitle>
+                <Skeleton className="h-6 w-3/4" />
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">{stats.total}</p>
+              <Skeleton className="h-9 w-12 rounded-md" />
             </CardContent>
           </Card>
+        ))}
+      </div>
+    );
+  }
 
-          {/* status cards */}
-          {(Object.entries(stats.byStatus) as [IncidentStatus, number][]).map(
-            ([status, count]) => (
-              <Card key={status}>
-                <CardHeader>
-                  <CardTitle>{STATUS_LABELS[status]}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-3xl font-bold">{count}</p>
-                </CardContent>
-              </Card>
-            ),
-          )}
+  if (isError) {
+    return (
+      <section className="grid place-items-center bg-background/80 h-[calc(100dvh-148px)]">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <TriangleAlert className="size-8 text-destructive" />
+          <p className="text-sm">
+            Hubo un problema al cargar las estadísticas. Reintentá
+          </p>
+          <Button variant="outline" size="sm" onClick={() => refetch()}>
+            Reintentar
+          </Button>
         </div>
-      ) : null}
+      </section>
+    );
+  }
+
+  return (
+    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Total de incidentes</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-3xl font-bold">{stats.total}</p>
+        </CardContent>
+      </Card>
+
+      {/* status cards */}
+      {(Object.entries(stats.byStatus) as [IncidentStatus, number][]).map(
+        ([status, count]) => (
+          <Card key={status}>
+            <CardHeader>
+              <CardTitle>{STATUS_LABELS[status]}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold">{count}</p>
+            </CardContent>
+          </Card>
+        ),
+      )}
     </section>
   );
 }
