@@ -12,14 +12,14 @@ export default function AppLayout() {
     <SidebarProvider defaultOpen={false}>
       <AppSidebar />
       <SidebarInset className="bg-slate-50">
-        <Header>
-          <SidebarTrigger />
-        </Header>
-        <main className="container mx-auto px-6 py-10">
-          <div className="flex-1">
+        <div className="grid grid-rows-[auto_1fr] h-dvh">
+          <Header>
+            <SidebarTrigger />
+          </Header>
+          <main className="container mx-auto px-6 py-10">
             <Outlet />
-          </div>
-        </main>
+          </main>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );
