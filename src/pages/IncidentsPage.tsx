@@ -4,15 +4,14 @@ import { useZones } from "@/hooks/useZones";
 import { getIncidentsColumns } from "@/components/dataTable/columns/incidentsColumns";
 import { DataTable } from "@/components/dataTable/DataTable";
 import type { IncidentFilters } from "@/lib/queryKeys";
-import { Spinner } from "@/components/spinner/Spinner";
 import { Button } from "@/components/ui/button";
-import { TriangleAlert } from "lucide-react";
-import { Marker, MarkerContent } from "@/components/ui/marker";
 import { IncidentsFilterDialog } from "@/components/dialogs/IncidentsFilterDialog";
 import { IncidentsFilterChips } from "@/components/chips/IncidentsFilterChips";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { PageHeader } from "@/components/pageHeader/PageHeader";
 import { isValidStatus } from "@/lib/schemas";
+import { LoadingState } from "@/components/feedback/LoadingState";
+import { ErrorState } from "@/components/feedback/ErrorState";
 
 export default function IncidentsPage() {
   const [searchParams] = useSearchParams();
@@ -81,32 +80,13 @@ export default function IncidentsPage() {
         </div>
       </div>
 
-      {/* región de contenido: swap loading / error / tabla */}
       <div className="flex-1 min-h-0">
-        {isPending && (
-          <div className="grid place-items-center h-full">
-            <div className="flex flex-col gap-4">
-              <Spinner />
-              <Marker role="status">
-                <MarkerContent className="shimmer">
-                  Cargando incidentes...
-                </MarkerContent>
-              </Marker>
-            </div>
-          </div>
-        )}
+        {isPending && <LoadingState text="Cargando incidentes..." />}
         {isError && (
-          <div className="grid place-items-center h-full">
-            <div className="flex flex-col items-center gap-3 text-center">
-              <TriangleAlert className="size-8 text-destructive" />
-              <p className="text-sm">
-                Hubo un problema al cargar los incidentes. Reintentá
-              </p>
-              <Button variant="outline" size="sm" onClick={() => refetch()}>
-                Reintentar
-              </Button>
-            </div>
-          </div>
+          <ErrorState
+            text="Hubo un problema al cargar los incidentes. Reintentá"
+            onRetry={refetch}
+          />
         )}
         {!isPending && !isError && (
           <div className="grid grid-cols-1">

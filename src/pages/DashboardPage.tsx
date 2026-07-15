@@ -8,13 +8,12 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { STATUS_LABELS } from "@/lib/incidentOptions";
-import { Button } from "@/components/ui/button";
-import { TriangleAlert } from "lucide-react";
 import { useZones } from "@/hooks/useZones";
 import type { IncidentStatus } from "@/lib/schemas";
 import { IncidentsByZoneChart } from "@/components/charts/IncidentsByZoneChart";
 import { PageHeader } from "@/components/pageHeader/PageHeader";
 import { Link } from "react-router";
+import { ErrorState } from "@/components/feedback/ErrorState";
 
 const KPI_GRID = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4";
 
@@ -65,17 +64,10 @@ export default function DashboardPage() {
 
     if (isError || zonesError) {
       return (
-        <section className="grid place-items-center bg-background/80 h-[calc(100dvh-148px)]">
-          <div className="flex flex-col items-center gap-3 text-center">
-            <TriangleAlert className="size-8 text-destructive" />
-            <p className="text-sm">
-              Hubo un problema al cargar las estadísticas. Reintentá
-            </p>
-            <Button variant="outline" size="sm" onClick={() => refetch()}>
-              Reintentar
-            </Button>
-          </div>
-        </section>
+        <ErrorState
+          text="Hubo un problema al cargar las estadísticas. Reintentá"
+          onRetry={refetch}
+        />
       );
     }
 
@@ -119,12 +111,14 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 h-full">
       <PageHeader
         title="Dashboard"
         subtitle="Resumen operativo de incidentes"
       />
-      <div className="grid grid-cols-1 gap-6">{renderContent()}</div>
+      <div className="grid grid-cols-1 gap-6 flex-1 min-h-0">
+        {renderContent()}
+      </div>
     </div>
   );
 }

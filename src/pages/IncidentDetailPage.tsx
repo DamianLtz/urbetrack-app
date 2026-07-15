@@ -1,10 +1,7 @@
 import { useParams, useNavigate } from "react-router";
 import { useIncidentById } from "@/hooks/useIncidents";
 
-import { ArrowLeft, TriangleAlert } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/spinner/Spinner";
-import { Marker as MarkerUI, MarkerContent } from "@/components/ui/marker";
+import { ArrowLeft } from "lucide-react";
 
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import {
@@ -25,6 +22,8 @@ import { useZones } from "@/hooks/useZones";
 import { useMemo } from "react";
 import { Field, FieldTitle, FieldDescription } from "@/components/ui/field";
 import { PageHeader } from "@/components/pageHeader/PageHeader";
+import { ErrorState } from "@/components/feedback/ErrorState";
+import { LoadingState } from "@/components/feedback/LoadingState";
 
 export default function IncidentDetailPage() {
   const { id } = useParams();
@@ -54,32 +53,11 @@ export default function IncidentDetailPage() {
       </button>
       <PageHeader title="Detalle del incidente" />
       <div className="flex-1 min-h-0">
-        {isPending && (
-          <div className="grid place-items-center h-full">
-            <div className="flex flex-col gap-4">
-              <Spinner />
-              <MarkerUI>
-                <MarkerContent className="shimmer">
-                  Cargando incidente...
-                </MarkerContent>
-              </MarkerUI>
-            </div>
-          </div>
-        )}
+        {isPending && <LoadingState text="Cargando incidente..." />}
         {isError && (
-          <div className="grid place-items-center h-full">
-            <div className="flex flex-col items-center gap-3 text-center">
-              <TriangleAlert className="size-8 text-destructive" />
-              <p className="text-sm">
-                Hubo un problema al cargar los incidentes. Reintentá
-              </p>
-              <Button variant="outline" size="sm" onClick={() => refetch()}>
-                Reintentar
-              </Button>
-            </div>
-          </div>
+          <ErrorState text="Error al cargar el incidente." onRetry={refetch} />
         )}
-        {!isPending && !isError && incident && (
+        {!isError && incident && (
           <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
             <Card>
               <CardHeader>

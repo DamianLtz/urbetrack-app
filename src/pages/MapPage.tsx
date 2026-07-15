@@ -2,13 +2,12 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { useAssets } from "@/hooks/useAssets";
-import { Spinner } from "@/components/spinner/Spinner";
-import { TriangleAlert } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { IncidentsLayer } from "@/components/map/IncidentsLayer";
 import { MapFilters } from "@/components/map/MapFilters";
 import { PageHeader } from "@/components/pageHeader/PageHeader";
 import { ASSET_TYPE_LABELS, ASSET_STATUS_LABELS } from "@/lib/assetOptions";
+import { ErrorState } from "@/components/feedback/ErrorState";
+import { LoadingState } from "@/components/feedback/LoadingState";
 
 const CABA_CENTER: [number, number] = [-34.6037, -58.3816];
 
@@ -25,23 +24,13 @@ export default function MapPage() {
         <MapFilters />
       </div>
       <div className="relative flex-1">
-        {isFetching && (
-          <div className="absolute inset-0 z-1000 grid place-items-center bg-background/50">
-            <Spinner />
-          </div>
-        )}
+        {isFetching && <LoadingState text="Cargando mapa..." overlay />}
         {isError && (
-          <div className="absolute inset-0 z-1000 grid place-items-center bg-background/80">
-            <div className="flex flex-col items-center gap-3 text-center">
-              <TriangleAlert className="size-8 text-destructive" />
-              <p className="text-sm">
-                Hubo un problema al cargar el mapa. Reintentá
-              </p>
-              <Button variant="outline" size="sm" onClick={() => refetch()}>
-                Reintentar
-              </Button>
-            </div>
-          </div>
+          <ErrorState
+            text="Hubo un problema al cargar el mapa. Reintentá"
+            onRetry={refetch}
+            overlay
+          />
         )}
         <MapContainer center={CABA_CENTER} zoom={12} className="h-full w-full">
           <TileLayer
